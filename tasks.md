@@ -60,7 +60,7 @@ In order to see your changes in a browser, you can run `npm start` from the comm
 
 ### 1.9 - Ticker FPS
 
-@ticker-fps Use `createjs.Ticker` object and `setFPS()` to set the frame per second to 30.
+@ticker-fps Use the `createjs.Ticker` object and `setFPS()` to set the frame per second to 30.
 
 ### 1.10 - Keyboard listener
 
