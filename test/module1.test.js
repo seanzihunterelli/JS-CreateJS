@@ -9,12 +9,16 @@ const check_expr = (obj, object_name, property_name, operator, right_value) => {
 
 describe('Module 01 - Game Loop', () => {
 
+  // Targets all script tags on the page and returns the source for each script tag 
+  // Checks that the createjs source is present in each script tag
   it('Reference an external script @external-script', () => {
     const srcs = $('script').map(function(i, el) { return this.attribs.src }).get();
     assert(srcs.includes('https://code.createjs.com/1.0.0/createjs.min.js'), 'Did you add a `script` tag for the `CreateJS` library?');
     assert(srcs.includes('https://code.createjs.com/1.0.0/createjs.min.js'), 'Did you add a `script` tag for the `app.js` file?');
   });
 
+  // Searches for a node with the event listener 'DOMContentLoaded'. 
+  // Creates an array with all nodes, verifying that at least one exists.    
   it('Listen for DOMContentLoaded @listen-domcontentloaded', () => {
     assert(astq.query(ast,`
       // CallExpression [
@@ -25,6 +29,9 @@ describe('Module 01 - Game Loop', () => {
         /:arguments Literal [ @value == 'DOMContentLoaded' ]
       ]`).length >= 1, 'Do you have an event listener that is listening for the `DOMContentLoaded` event?');
   });
+
+  // Searches for an element for each KEYCODE_LEFT, _UP, _RIGHT, and _DOWN. 
+  // Adds each to an array, verifying that at least one exists.   
   it('Key code constants @keycode-constants', () => {
     assert(astq.query(ast,`
       // BlockStatement
@@ -59,6 +66,10 @@ describe('Module 01 - Game Loop', () => {
           ]
     `).length >= 1, 'Do you have a constant called `KEYCODE_DOWN` set equal to `40`?');
   });
+
+  // Searches for a 'stage' element. Adds it to an array, verifying that at least one exists. 
+  // References the ship's init object to verify that it was created using createjs
+  // Verifies that createjs.Stage() was called with the argument of 'canvas'
   it('Create a stage @create-stage', () => {
     const stage = astq.query(ast, `
       // BlockStatement
@@ -72,6 +83,9 @@ describe('Module 01 - Game Loop', () => {
     assert(stage[0].init.callee.object.name === 'createjs' && stage[0].init.callee.property.name == 'Stage', 'Are you using the `createjs.Stage` class?');
     assert(stage[0].init.arguments[0].value === 'canvas', 'Are you providing the ID of `canvas` to the `Stage` constructor?');
   });
+
+  // Searches for a 'ship' element. Adds it to an array, verifying that at least one exists. 
+  // References the ship's init object to verify that it was created using createjs
   it('Create a shape @ship-shape', () => {
     const ship = astq.query(ast, `
       // BlockStatement
